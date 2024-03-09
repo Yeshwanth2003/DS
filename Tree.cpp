@@ -80,7 +80,7 @@ public:
      // delete function
      void del(int key)
      {
-          Node *pre;
+          Node *pre = root;
           Node *curr = root;
           // this loop finds the node to be deleted and its pre/parent node
           while (true)
@@ -192,7 +192,7 @@ int main()
      t.add(102);
      t.add(115);
      t.print();
-     t.del(90);
+     t.del(110);
      cout << endl
           << "After delete" << endl;
      t.print();
