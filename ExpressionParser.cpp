@@ -134,18 +134,46 @@ public:
                }
                else
                {
-                    // continue poping operands and evaluating
+                    int operand2 = stack.top() - '0';
+                    stack.pop();
+                    int operand1 = stack.top() - '0';
+                    stack.pop();
+
+                    int ans;
+                    // switch between various operation
+                    switch (i)
+                    {
+                    case '+':
+                         ans = this->add(operand1, operand2);
+                         break;
+                    case '-':
+                         ans = this->sub(operand1, operand2);
+                         break;
+                    case '*':
+                         ans = this->mul(operand1, operand2);
+                         break;
+                    case '/':
+                         ans = this->div(operand1, operand2);
+                         break;
+                    case '^':
+                         ans = pow(operand1, operand2);
+                         break;
+                    }
+                    // adding the soln of sub expression into stack for further calculation
+                    stack.push(ans + '0');
                }
           }
           cout << postfix;
-          return 0;
+          return stack.top() - '0';
      }
 };
 
 int main()
 {
-     ArithemeticEvaluator a("2*(5-3)+4/(8-6)");
+     ArithemeticEvaluator a("(3+4)*(5-2)*(8*2-5*3)");
      int ans = a.evaluate();
      cout << endl
           << "Answer:- " << ans;
 }
+
+// this code has some problem with ^ power at times

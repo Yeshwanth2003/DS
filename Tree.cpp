@@ -203,7 +203,7 @@ int main()
      t.add(13);
      t.add(9);
      t.print();
-     t.del(5);
+     t.del(12);
      cout << endl
           << "After delete" << endl;
      t.print();
