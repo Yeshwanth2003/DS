@@ -122,7 +122,6 @@ public:
                     {
                          pre->l = nullptr;
                     }
-                    return;
                }
                else if (curr->l && !curr->r) // if node with left child
                {
