@@ -162,12 +162,22 @@ public:
                          // thus replace curr value with is left node's value
                          // then set curr's left to null
                          curr->val = curr->l->val;
+                         if (curr->l->l) // whether the node has left subtree
+                         {
+                              curr->l = curr->l->l;
+                              return;
+                         }
                          curr->l = nullptr;
                          return;
                     }
                     // else change curr to pre's greatest which is at right
                     // then set pre's right to null
                     curr->val = t1->r->val;
+                    if (t1->r->l) // whether the node has left subtree
+                    {
+                         t1->r = t1->r->l;
+                         return;
+                    }
                     t1->r = nullptr;
                }
                return;
@@ -181,17 +191,19 @@ public:
 int main()
 {
      Tree t;
-     t.add(100);
-     t.add(90);
-     t.add(110);
-     t.add(95);
-     t.add(93);
-     t.add(80);
-     t.add(97);
-     t.add(102);
-     t.add(115);
+     t.add(5);
+     t.add(3);
+     t.add(2);
+     t.add(4);
+     t.add(8);
+     t.add(7);
+     t.add(6);
+     t.add(12);
+     t.add(10);
+     t.add(13);
+     t.add(9);
      t.print();
-     t.del(110);
+     t.del(5);
      cout << endl
           << "After delete" << endl;
      t.print();
