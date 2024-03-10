@@ -122,6 +122,7 @@ public:
                     {
                          pre->l = nullptr;
                     }
+                    delete curr; // to free up memory and setting its hooks to null so no subtree is lost
                }
                else if (curr->l && !curr->r) // if node with left child
                {
@@ -133,6 +134,8 @@ public:
                     {
                          pre->l = curr->l;
                     }
+                    curr->l = nullptr;
+                    delete curr; // to free up memory and setting its hooks to null so no subtree is lost
                }
                else if (curr->r && !curr->l) // if node with right child
                {
@@ -144,6 +147,8 @@ public:
                     {
                          pre->l = curr->r;
                     }
+                    curr->r = nullptr;
+                    delete curr; // to free up memory and setting its hooks to null so no subtree is lost
                }
                else // a sub FBT(full balanced tree)
                {
@@ -160,25 +165,21 @@ public:
                     {
                          // as no pre is found curr in pre and only one value exist in it left sub tree
                          // thus replace curr value with is left node's value
-                         // then set curr's left to null
+                         // then set curr's left to curr->l->l to prevent if any on curr->l->l
                          curr->val = curr->l->val;
-                         if (curr->l->l) // whether the node has left subtree
-                         {
-                              curr->l = curr->l->l;
-                              return;
-                         }
-                         curr->l = nullptr;
+                         curr->l = curr->l->l;        // setting curr->l->l if it's l is null or sub tree
+                         Node *toBeDeleted = curr->l; // tracking the replaced node for freeing up memory
+                         toBeDeleted->l->l = nullptr;
+                         delete toBeDeleted;
                          return;
                     }
                     // else change curr to pre's greatest which is at right
-                    // then set pre's right to null
-                    curr->val = t1->r->val;
-                    if (t1->r->l) // whether the node has left subtree
-                    {
-                         t1->r = t1->r->l;
-                         return;
-                    }
-                    t1->r = nullptr;
+                    // then set pre's right to pre's->r->l to prevent if any(Sub tree) on l
+                    curr->val = t1->r->val; // setting t1->r->l if it's l is null or sub tree
+                    t1->r = t1->r->l;
+                    Node *toBeDeleted = t1->r;   // tracking the replaced node for freeing up memory
+                    toBeDeleted->r->l = nullptr; // setting it's l to null so that no other nodes are lost
+                    delete toBeDeleted;          // deleting it
                }
                return;
           }
@@ -203,7 +204,7 @@ int main()
      t.add(13);
      t.add(9);
      t.print();
-     t.del(12);
+     t.del(13);
      cout << endl
           << "After delete" << endl;
      t.print();
