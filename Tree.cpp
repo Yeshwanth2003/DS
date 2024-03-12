@@ -32,6 +32,13 @@ protected:
           }
           return preGreat;
      }
+     // find tree's height helper
+     int myHeight(Node *n)
+     {
+          if (!n)
+               return 0;
+          return 1 + max(myHeight(n->l), myHeight(n->r));
+     }
      // root node
      Node *root;
 
@@ -203,6 +210,11 @@ public:
                     q.push(t->r);
           }
      }
+     int height() // find the height of the tree
+     {
+          // calling helper(myHeight) to keep the invoke of this funtion simple
+          return this->myHeight(this->root);
+     }
 };
 
 int main()
@@ -224,4 +236,5 @@ int main()
      //      << "After delete" << endl;
      // t.print();
      // t.BFS();
+     cout << t.height();
 }
