@@ -187,6 +187,22 @@ public:
           cout
               << "Value not found" << endl;
      }
+     void BFS() // BFS or level order traversal
+     {
+          Node *temp = this->root;
+          queue<Node *> q;
+          q.push(temp);
+          while (!q.empty())
+          {
+               Node *t = q.front();
+               q.pop();
+               cout << t->val << " ";
+               if (t->l)
+                    q.push(t->l);
+               if (t->r)
+                    q.push(t->r);
+          }
+     }
 };
 
 int main()
@@ -203,9 +219,9 @@ int main()
      t.add(10);
      t.add(13);
      t.add(9);
-     t.print();
-     t.del(12);
-     cout << endl
-          << "After delete" << endl;
-     t.print();
+     // t.del(12);
+     // cout << endl
+     //      << "After delete" << endl;
+     // t.print();
+     // t.BFS();
 }
