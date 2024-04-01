@@ -31,7 +31,7 @@ protected:
                     // if not empty chech if top of stack has more more priority than the i, in which case lower priority cannot go over higher one,
                     // in worst case there might be many higher priority stacked on and on
                     // if higher priority is found on top of the stack then pop it out and add to string
-                    while (!stack->empty() && (operator_priority[i] < operator_priority[stack->top()]))
+                    while (!stack->empty() && (operator_priority[i] <= operator_priority[stack->top()]))
                     {
                          *postfix += stack->top();
                          stack->pop();
@@ -124,19 +124,18 @@ public:
      {
           string postfix = this->postFix();
           // to maintain operands
-          stack<char> stack;
+          stack<int> stack;
           for (auto i : postfix)
           {
-               int t = i - '0';
-               if (t >= 0 && t <= 9)
+               if (isdigit(i))
                {
-                    stack.push(i);
+                    stack.push(i - '0');
                }
                else
                {
-                    int operand2 = stack.top() - '0';
+                    int operand2 = stack.top();
                     stack.pop();
-                    int operand1 = stack.top() - '0';
+                    int operand1 = stack.top();
                     stack.pop();
 
                     int ans;
@@ -160,17 +159,17 @@ public:
                          break;
                     }
                     // adding the soln of sub expression into stack for further calculation
-                    stack.push(ans + '0');
+                    stack.push(ans);
                }
           }
           cout << postfix;
-          return stack.top() - '0';
+          return stack.top();
      }
 };
 
 int main()
 {
-     ArithemeticEvaluator a("(3+4)*(5-2)*(8*2-5*3)");
+     ArithemeticEvaluator a("1+2*9*(2+3)");
      int ans = a.evaluate();
      cout << endl
           << "Answer:- " << ans;
