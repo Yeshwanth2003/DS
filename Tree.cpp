@@ -238,3 +238,132 @@ int main()
      // t.BFS();
      cout << t.height();
 }
+
+/*
+
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left),
+ * right(right) {}
+ * };
+
+class Solution
+{
+public:
+     TreeNode *deleteNode(TreeNode *root, int key)
+     {
+          if (!root)
+               return root;
+          if (root->val == key)
+          {
+               if (!root->left && !root->right)
+               {
+                    root = nullptr;
+               }
+               else if (root->left && !root->right)
+               {
+                    root = root->left;
+               }
+               else if (!root->left && root->right)
+               {
+                    root = root->right;
+               }
+               else
+               {
+                    TreeNode *temp = nullptr;
+                    TreeNode *f = root->right;
+                    while (f->left)
+                    {
+                         temp = f;
+                         f = f->left;
+                    }
+                    root->val = f->val;
+                    if (!temp)
+                    {
+                         root->right = f->right;
+                    }
+                    else
+                    {
+                         temp->left = f->right;
+                    }
+               }
+               return root;
+          }
+          TreeNode *pre = root;
+          TreeNode *r = root;
+          while (root && root->val != key)
+          {
+               pre = root;
+               if (root->val <= key)
+               {
+                    root = root->right;
+               }
+               else
+               {
+                    root = root->left;
+               }
+          }
+          if (!root)
+               return r;
+          bool is_l = false;
+          if (pre->left && pre->left->val == root->val)
+               is_l = true;
+          if (!root->left && !root->right)
+          {
+               if (is_l)
+               {
+                    pre->left = nullptr;
+               }
+               else
+               {
+                    pre->right = nullptr;
+               }
+          }
+          else if (root->left && !root->right)
+          {
+               if (is_l)
+               {
+                    pre->left = root->left;
+               }
+               else
+               {
+                    pre->right = root->left;
+               }
+          }
+          else if (!root->left && root->right)
+          {
+               if (is_l)
+               {
+                    pre->left = root->right;
+               }
+               else
+               {
+                    pre->right = root->right;
+               }
+          }
+          else
+          {
+               TreeNode *rpl = nullptr;
+               TreeNode *temp = root->right;
+               while (temp->left)
+               {
+                    rpl = temp;
+                    temp = temp->left;
+               }
+               root->val = temp->val;
+               if (!rpl)
+               {
+                    root->right = temp->right;
+               }
+               else
+                    rpl->left = temp->right;
+          }
+          return r;
+     }
+};
+* /
